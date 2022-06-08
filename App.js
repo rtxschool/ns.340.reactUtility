@@ -1,3 +1,7 @@
+//The tool base
+
+
+ 
 
 import React from 'react';
 import type {Node} from 'react';
@@ -8,107 +12,104 @@ import {
   Text,
   FlatList,
   useColorScheme,
-  View, useState
+  View, useState, Button
 } from 'react-native';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+  
+//get the products screen 
+   import {FrmProducts
+          }  from './FrmProducts'         
+          
+            
+//get the product screen
+ import {FrmProduct} from './FrmProduct'
+ 
+ 
 
+//get the primary screen
+  import { FrmPrim } from './FrmPrim'
+ 
+
+//the primary component
 const App: () => Node = () => {
+    
+const Stack = createNativeStackNavigator();
+
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? "rgb(0, 0, 0)" : "rgb(220, 220, 220)"
-  };
-  
-  
+  };  
 
-const frms =
-              [
-                {r: "vbscript"},
-                {r: "jscript"},
-                {r: "jquery"}
-              ];
-  
-renderFrame = ({item}) => {
-        return (
-            <View 
-            >
-               <Text
-               style={[
-          styles.text, styles.h18,
-          {
-            color: isDarkMode ?
-             "rgb(220, 220, 220)" : "rgb(0, 0, 0)"
-          },
-          ]}
-          >          
-               {item.r}
-               </Text>
-            </View>
-         );
-         };
-     
-     
 
+const FrmPrim_ = ({ navigation }) => {
+return (
+<>
       
-            
+    < FrmPrim / >
+ </>
+      
+          );
+          };
 
-  return (   
-     <SafeAreaView style={backgroundStyle}>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? "rgb(0, 0, 0)" : "rgb(220, 220, 220)",
-          }}>
-          <Text
-          style={
-          [styles.h24,
-          styles.text,
-          {
-            color: isDarkMode ? "rgb(220, 220, 220)" : "rgb(0, 0, 0)",
-          },
-        ]}>
-                 Utility React
-          </Text>
-          
-          
-          <Text
-          style={[
-          styles.text,
-          {
-            color: isDarkMode ? "rgb(220, 220, 220)" : "rgb(0, 0, 0)",
-            marginLeft: 8
-          },
-        ]}
-        >
-                 This utility illustrates the utilization of React Native for UI development for Smart Apps.
-                   The Text & Listview objects are explored.
-          </Text>
-          
-          <Text
-          style={[
-          styles.text, styles.h20,
-          {
-            color: isDarkMode ? "rgb(220, 220, 220)" : "rgb(0, 0, 0)",
-          },
-          ]}
-          >
-          Frameworks
-          </Text>
-          
-              <FlatList data = {frms}              
+
+
+
+const FrmProducts_
+ = ({ navigation }) => { 
+  return(<>
+   <FrmProducts />
+   </>
+        );
+        };        
+      
+      const FrmProd_  = ({ navigation, route
+                        }) => { 
+                        
+                        
+       return(<>
+       <FrmProduct item={route.params.item}
+       />
+       </>
+       );
+       };
               
-              renderItem = {renderFrame}
-                   keyExtractor={item => item.r}
-                />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+       
+       
+       
+       
+       
+       
+  return (   
+  <NavigationContainer>
+    <Stack.Navigator>
+        <Stack.Screen
+          name="Prim"
+          component={FrmPrim_}
+          options={{ title: 'Main Screen'}}
+        />
+  
+        <Stack.Screen
+          name="Products"
+          component={FrmProducts_}
+          options={{ title: 'Products'}}
+        />
+  
+        <Stack.Screen
+          name="Product"
+          component={FrmProd_}
+          options = {{ title: 'Product'}}
+        />
+            </Stack.Navigator>
+      </NavigationContainer>
+  
   );
 };
 
